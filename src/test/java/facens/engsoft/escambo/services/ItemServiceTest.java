@@ -16,7 +16,7 @@ public class ItemServiceTest {
     @Test
     public void verificaCadastroDeItem() {
         Usuario usuario = new Usuario();
-        usuario.setName("Zaphod Beeblebrox");
+        usuario.setNome("Zaphod Beeblebrox");
 
         Item item = new Item();
         item.setNome("Coração de Ouro");
