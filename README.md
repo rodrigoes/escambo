@@ -1,3 +1,0 @@
-# Escambo
-
-## Desenvolvimento com TDD
