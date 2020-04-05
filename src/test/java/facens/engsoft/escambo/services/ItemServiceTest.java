@@ -18,21 +18,26 @@ public class ItemServiceTest {
         Usuario usuario = new Usuario();
         usuario.setNome("Zaphod Beeblebrox");
 
+        // Dado que tenho um item
         Item item = new Item();
         item.setNome("Coração de Ouro");
         item.setDescricao(any());
 
+        // Quero adicioná-lo para trocas
         boolean actual = itemService.addItemPara(usuario, item);
         assertTrue(actual, "Testa que cadastro de item foi concretizado para usuário");
     }
 
     @Test
     public void verificaBuscaDeItensPorNome_quando_EstiverCadastrado() {
+        // Dado que estou interessado em um item
         Item expectedItem = new Item();
         expectedItem.setNome("Toalha");
 
+        // Quero buscar por ele
         List<Item> actualItems = itemService.buscarItensPorNome(expectedItem.getNome());
 
+        // E saber quando houver algum resultado
         boolean itensTemNomeEsperado = actualItems
                 .stream()
                 .allMatch(item -> item.getNome().toLowerCase().contains(expectedItem.getNome().toLowerCase()));

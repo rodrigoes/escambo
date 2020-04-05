@@ -12,4 +12,5 @@ public class Usuario {
     private String nome;
     private List<Item> itens;
     private List<NotificacaoDeInteresse> notificacoes;
+    private InformacoesDeContato informacoesDeContato;
 }
