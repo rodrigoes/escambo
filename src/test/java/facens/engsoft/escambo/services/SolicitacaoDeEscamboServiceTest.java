@@ -31,9 +31,9 @@ public class SolicitacaoDeEscamboServiceTest {
         itemA.setDescricao("é pequeno, amarelo e semelhante a uma sanguessuga, e é provavelmente a criatura mais estranha em todo o Universo. Alimenta-se de energia mental, não daquele que o hospeda, mas das criaturas ao redor dele. Absorve todas as frequências mentais inconscientes desta energia mental e se alimenta delas, e depois expele na mente de seu hospedeiro uma matriz telepática formada pela combinação das frequências mentais conscientes com os impulsos nervosos captados dos centros cerebrais responsáveis pela fala do cérebro que os emitiu. Na prática, o efeito disto é o seguinte: se você introduz no ouvido um peixe-babel, você compreende imediatamente tudo o que lhe for dito em qualquer língua. Os padrões sonoros que você ouve decodificam a matriz de energia mental que o seu peixe-babel transmitiu para a sua mente.");
         itemA.setUsuario(usuarioA);
 
-        usuarioA.setItens(Collections.singletonList(itemA));
+        usuarioA.setItens(Collections.singleton(itemA));
 
-        when(itemService.buscarItensPorNome(any())).thenReturn(usuarioA.getItens());
+        when(itemService.buscarItensPorNome(any())).thenReturn(Collections.singletonList(itemA));
     }
 
     @Test
