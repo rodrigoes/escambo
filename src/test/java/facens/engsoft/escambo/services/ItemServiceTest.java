@@ -4,6 +4,8 @@ import facens.engsoft.escambo.models.IntervaloDeDisponibilidade;
 import facens.engsoft.escambo.models.Item;
 import facens.engsoft.escambo.models.Usuario;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -12,18 +14,21 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 public class ItemServiceTest {
 
-    private static final ItemService itemService = new ItemService();
+    @Autowired
+    private ItemService itemService;
 
     @Test
     public void verificaCadastroDeItem() {
         Usuario usuario = new Usuario();
         usuario.setNome("Zaphod Beeblebrox");
+        usuario.setId(1);
 
         // Dado que tenho um item
         Item item = new Item();
-        item.setNome("Coração de Ouro");
+        item.setNome("Coração de Ouro 2.0");
         item.setDescricao(any());
 
         // Quero adicioná-lo para trocas
@@ -71,6 +76,7 @@ public class ItemServiceTest {
 
         cal.set(1988, Calendar.MARCH, 1);
         Date dataFinal = cal.getTime();
+
 
         // Quero adicionar intervalos de disponibilidade a este item
         IntervaloDeDisponibilidade intervaloDeDisponibilidade = new IntervaloDeDisponibilidade();
