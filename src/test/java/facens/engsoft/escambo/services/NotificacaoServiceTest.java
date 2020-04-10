@@ -1,13 +1,13 @@
 package facens.engsoft.escambo.services;
 
-import facens.engsoft.escambo.models.Item;
-import facens.engsoft.escambo.models.NotificacaoDeInteresse;
-import facens.engsoft.escambo.models.Usuario;
+import facens.engsoft.escambo.enums.StatusDaSolicitacao;
+import facens.engsoft.escambo.models.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -17,7 +17,6 @@ import static org.mockito.Mockito.when;
 public class NotificacaoServiceTest {
 
     private static final NotificacaoService notificacaoService = new NotificacaoService();
-
     private static final ItemService itemService = mock(ItemService.class);
 
     @BeforeAll
@@ -36,7 +35,7 @@ public class NotificacaoServiceTest {
     }
 
     @Test
-    public void verificaNotificacaoDisparada() {
+    public void verificaNotificacaoDeInteresseDisparada() {
         Usuario usuarioB = new Usuario();
         usuarioB.setNome("Arthur Dent");
 
@@ -49,16 +48,44 @@ public class NotificacaoServiceTest {
 
         NotificacaoDeInteresse notificacaoCriada = notificacaoService.notificarInteresse(usuarioB, itemBuscado);
 
-        assertTrue(comparaNotificacoes(notificacaoEsperada, notificacaoCriada),
+        assertTrue(comparaNotificacoesDeInteresse(notificacaoEsperada, notificacaoCriada),
                 "Uma notificação deve ser retornada no formato esperado");
     }
 
-    private Boolean comparaNotificacoes(NotificacaoDeInteresse a, NotificacaoDeInteresse b) {
+    @Test
+    public void verificaNotificacaoDeSolicitacao() {
+        SolicitacaoDeEscambo solicitacaoDeEscambo = mockSolicitacaoDeEscambo();
+        NotificacaoDeEscambo notificacaoDeEscambo = notificacaoService.notificarEscambo(solicitacaoDeEscambo);
+
+        assertEquals(solicitacaoDeEscambo, notificacaoDeEscambo.getSolicitacaoDeEscambo(),
+                "Deve ser criada uma notificação de escambo baseada na solicitação do escambo");
+    }
+
+    private Boolean comparaNotificacoesDeInteresse(NotificacaoDeInteresse a, NotificacaoDeInteresse b) {
         if (a == null) return false;
         if (b == null) return false;
 
         if (!a.getItemDeInteresse().equals(b.getItemDeInteresse())) return false;
         if (!a.getUsuarioQueOriginou().equals(b.getUsuarioQueOriginou())) return false;
         return a.getMensagem().equals(b.getMensagem());
+    }
+
+    private SolicitacaoDeEscambo mockSolicitacaoDeEscambo() {
+        Usuario usuarioB = new Usuario();
+        usuarioB.setNome("Arthur Dent");
+
+        Item itemB = new Item();
+        itemB.setNome("Toalha");
+        itemB.setDescricao("A toalha é um dos objetos mais úteis para um mochileiro interestelar");
+        itemB.setUsuario(usuarioB);
+
+        Item itemSolicitado = itemService.buscarItensPorNome(anyString()).stream()
+                .findFirst().orElse(null);
+
+        return SolicitacaoDeEscambo.builder()
+                .itemDoSolicitador(itemB)
+                .itemSolicitado(itemSolicitado)
+                .statusDaSolicitacao(StatusDaSolicitacao.PENDENTE)
+                .build();
     }
 }
