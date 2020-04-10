@@ -1,5 +1,6 @@
 package facens.engsoft.escambo.services;
 
+import facens.engsoft.escambo.enums.StatusDaSolicitacao;
 import facens.engsoft.escambo.models.InformacoesDeContato;
 import facens.engsoft.escambo.models.Item;
 import facens.engsoft.escambo.models.SolicitacaoDeEscambo;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -39,11 +41,11 @@ public class SolicitacaoDeEscamboServiceTest {
     @Test
     public void verificaSolicitacaoDeEscambo() {
         // Dado que outro usuário tem um item desejado
+        // Quando possuir outro item de valor semelhante, quero solicitar uma troca
         SolicitacaoDeEscambo solicitacaoDeEscambo = mockSolicitacaoDeEscambo();
 
-        // Quando possuir outro item de valor semelhante, quero solicitar uma troca
-        assertTrue(solicitacaoDeEscamboService.solicitarEscambo(solicitacaoDeEscambo),
-                "Uma solicitação deve ser criada");
+        assertEquals(StatusDaSolicitacao.PENDENTE, solicitacaoDeEscambo.getStatusDaSolicitacao(),
+                "Uma solicitação deve ser criada com status Pendente");
     }
 
     @Test
@@ -71,11 +73,7 @@ public class SolicitacaoDeEscamboServiceTest {
         Item itemSolicitado = itemService.buscarItensPorNome(anyString()).stream()
                 .findFirst().orElse(null);
 
-        SolicitacaoDeEscambo solicitacaoDeEscambo = new SolicitacaoDeEscambo();
-        solicitacaoDeEscambo.setItemDoSolicitador(itemB);
-        solicitacaoDeEscambo.setItemSolicitado(itemSolicitado);
-
-        return solicitacaoDeEscambo;
+        return solicitacaoDeEscamboService.solicitarEscambo(itemB, itemSolicitado);
     }
 
     private Boolean comparaInformacoesDeContato(InformacoesDeContato a, InformacoesDeContato b) {
