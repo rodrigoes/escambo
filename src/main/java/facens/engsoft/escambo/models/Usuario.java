@@ -1,9 +1,11 @@
 package facens.engsoft.escambo.models;
 
+import facens.engsoft.escambo.enums.Nota;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,11 +20,20 @@ public class Usuario {
     private Integer Id;
     private String nome;
 
+    @Transient
+    private InformacoesDeContato informacoesDeContato;
+
     @OneToMany(mappedBy = "usuario")
     private Set<Item> itens = new HashSet<>();
 
     @Transient
-    private List<NotificacaoDeInteresse> notificacoes;
+    private List<NotificacaoDeInteresse> notificacoes = new ArrayList<>();
+
     @Transient
-    private InformacoesDeContato informacoesDeContato;
+    private List<Nota> notas = new ArrayList<>();
+
+    @Transient
+    public Double getMedia() {
+        return 0d;
+    }
 }
