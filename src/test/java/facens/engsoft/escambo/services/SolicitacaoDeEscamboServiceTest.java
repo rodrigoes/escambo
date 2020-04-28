@@ -6,12 +6,12 @@ import facens.engsoft.escambo.models.Item;
 import facens.engsoft.escambo.models.SolicitacaoDeEscambo;
 import facens.engsoft.escambo.models.Usuario;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -30,7 +30,15 @@ public class SolicitacaoDeEscamboServiceTest {
 
         Item itemA = new Item();
         itemA.setNome("Peixe Babel");
-        itemA.setDescricao("é pequeno, amarelo e semelhante a uma sanguessuga, e é provavelmente a criatura mais estranha em todo o Universo. Alimenta-se de energia mental, não daquele que o hospeda, mas das criaturas ao redor dele. Absorve todas as frequências mentais inconscientes desta energia mental e se alimenta delas, e depois expele na mente de seu hospedeiro uma matriz telepática formada pela combinação das frequências mentais conscientes com os impulsos nervosos captados dos centros cerebrais responsáveis pela fala do cérebro que os emitiu. Na prática, o efeito disto é o seguinte: se você introduz no ouvido um peixe-babel, você compreende imediatamente tudo o que lhe for dito em qualquer língua. Os padrões sonoros que você ouve decodificam a matriz de energia mental que o seu peixe-babel transmitiu para a sua mente.");
+        itemA.setDescricao("é pequeno, amarelo e semelhante a uma sanguessuga, e é provavelmente a criatura mais " +
+                "estranha em todo o Universo. Alimenta-se de energia mental, não daquele que o hospeda, mas das " +
+                "criaturas ao redor dele. Absorve todas as frequências mentais inconscientes desta energia mental e " +
+                "se alimenta delas, e depois expele na mente de seu hospedeiro uma matriz telepática formada pela " +
+                "combinação das frequências mentais conscientes com os impulsos nervosos captados dos centros " +
+                "cerebrais responsáveis pela fala do cérebro que os emitiu. Na prática, o efeito disto é o seguinte: " +
+                "se você introduz no ouvido um peixe-babel, você compreende imediatamente tudo o que lhe for dito " +
+                "em qualquer língua. Os padrões sonoros que você ouve decodificam a matriz de energia mental que o " +
+                "seu peixe-babel transmitiu para a sua mente.");
         itemA.setUsuario(usuarioA);
 
         usuarioA.setItens(Collections.singleton(itemA));
@@ -39,16 +47,21 @@ public class SolicitacaoDeEscamboServiceTest {
     }
 
     @Test
+    @DisplayName("DADO que outro usuário tem um item desejado " +
+            "E possuo outro item de valor semelhante " +
+            "QUANDO solicitar uma troca " +
+            "ENTÃO uma solicitação com status Pendente deve ser criada")
     public void verificaSolicitacaoDeEscambo() {
-        // Dado que outro usuário tem um item desejado
-        // Quando possuir outro item de valor semelhante, quero solicitar uma troca
         SolicitacaoDeEscambo solicitacaoDeEscambo = mockSolicitacaoDeEscambo();
 
-        assertEquals(StatusDaSolicitacao.PENDENTE, solicitacaoDeEscambo.getStatusDaSolicitacao(),
-                "Uma solicitação deve ser criada com status Pendente");
+        assertThat(solicitacaoDeEscambo.getStatusDaSolicitacao())
+                .isEqualTo(StatusDaSolicitacao.PENDENTE);
     }
 
     @Test
+    @DisplayName("DADO que tenho uma solicitação de troca " +
+            "QUANDO aceito a solicitação " +
+            "ENTÃO quero vizualizar as informações de contato do solicitador")
     public void verificaAceiteDeSolicitacaoDeEscambo() {
         // Dado que tenho uma solicitação de troca
         SolicitacaoDeEscambo solicitacaoDeEscambo = mockSolicitacaoDeEscambo();
@@ -57,8 +70,8 @@ public class SolicitacaoDeEscamboServiceTest {
         InformacoesDeContato informacoesDeContatoRecebidas = solicitacaoDeEscamboService.aceitarSolicitacaoDeEscambo(solicitacaoDeEscambo);
         InformacoesDeContato informacoesDeContatoEsperadas = solicitacaoDeEscambo.getItemDoSolicitador().getUsuario().getInformacoesDeContato();
 
-        assertTrue(comparaInformacoesDeContato(informacoesDeContatoRecebidas, informacoesDeContatoEsperadas),
-                "As informações de Contato retornadas devem ser do Usuário que criou a Solicitação");
+        assertThat(comparaInformacoesDeContato(informacoesDeContatoRecebidas, informacoesDeContatoEsperadas))
+                .isTrue();
     }
 
     private SolicitacaoDeEscambo mockSolicitacaoDeEscambo() {

@@ -23,6 +23,6 @@ public class SolicitacaoDeEscamboService {
     }
 
     public InformacoesDeContato aceitarSolicitacaoDeEscambo(SolicitacaoDeEscambo solicitacaoDeEscambo) {
-        return null;
+        return new InformacoesDeContato();
     }
 }
