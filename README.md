@@ -13,12 +13,14 @@ Use o parâmetro -x para ignorar uma ação do Gradle:
 ```bash
 .\gradlew clean build -x test
 ```
-Este comando é importante no desenvolvimento com TDD, pois no início os testes estarão quebrados, mas isso não significa que o desenvolvimento está errado.
+Este comando é importante no desenvolvimento com TDD, pois no início os testes estarão quebrados, mas isso não significa
+ que o desenvolvimento está errado.
 
-#####Lembre-se de inverter a barra se estiver em ambiente Unix
 
 ### Inversão de Controle
-Aplicando Injeção de Depêndencia e usando interfaces para representar serviços, foi possível injetar essa interface de maneiras diferentes, possibilitando vários tipos de testes.
+Aplicando Injeção de Depêndencia e usando interfaces para representar serviços, foi possível injetar essa interface de
+maneiras diferentes, possibilitando vários tipos de implementações, o que facilita para testar e evidencia dependencias 
+escondidas, melhorando também o processo de manutenção do software.
 
 ##### Usando mocks (ItemService) ou Services Reais (NotificacaoService)
 ![stub](docs/stub-example.png)
