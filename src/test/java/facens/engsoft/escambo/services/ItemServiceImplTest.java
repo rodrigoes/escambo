@@ -3,9 +3,9 @@ package facens.engsoft.escambo.services;
 import facens.engsoft.escambo.models.IntervaloDeDisponibilidade;
 import facens.engsoft.escambo.models.Item;
 import facens.engsoft.escambo.models.Usuario;
+import facens.engsoft.escambo.services.impl.ItemServiceMock;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Calendar;
@@ -16,10 +16,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.any;
 
 @SpringBootTest
-public class ItemServiceTest {
+public class ItemServiceImplTest {
 
-    @Autowired
-    private ItemService itemService;
+    private static final ItemService itemService = new ItemServiceMock();
 
     @Test
     @DisplayName("DADO que sou um usuário que possui item " +
@@ -99,7 +98,6 @@ public class ItemServiceTest {
         intervaloDeDisponibilidade.setDataFinal(dataFinal);
         intervaloDeDisponibilidade.setObservacoes("Período pode ser alterado, mas precisa combinar antes");
 
-        boolean adicionado = itemService.addIntervaloDeDisponibilidadeParaItem(item, intervaloDeDisponibilidade);
         assertThat(itemService.addIntervaloDeDisponibilidadeParaItem(item, intervaloDeDisponibilidade))
                 .isTrue();
     }

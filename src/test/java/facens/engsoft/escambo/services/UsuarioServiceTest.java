@@ -14,8 +14,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class UsuarioServiceTest {
 
-    private static final UsuarioService usuarioService = new UsuarioService();
-    private static final SolicitacaoDeEscamboService solicitacaoDeEscamboService = new SolicitacaoDeEscamboService();
+    private static final UsuarioService usuarioService = new UsuarioServiceImpl();
+    private static final SolicitacaoDeEscamboService solicitacaoDeEscamboService = new SolicitacaoDeEscamboServiceImpl();
 
     @Test
     @DisplayName("DADO dois usuários QUE ainda não trocaram itens ENTÃO eles não podem se avaliar")

@@ -15,7 +15,16 @@ Use o parâmetro -x para ignorar uma ação do Gradle:
 ```
 Este comando é importante no desenvolvimento com TDD, pois no início os testes estarão quebrados, mas isso não significa que o desenvolvimento está errado.
 
-######Lembre-se de inverter a barra se estiver em ambiente Unix
+#####Lembre-se de inverter a barra se estiver em ambiente Unix
+
+### Inversão de Controle
+Aplicando Injeção de Depêndencia e usando interfaces para representar serviços, foi possível injetar essa interface de maneiras diferentes, possibilitando vários tipos de testes.
+
+##### Usando mocks (ItemService) ou Services Reais (NotificacaoService)
+![stub](docs/stub-example.png)
+
+##### Usando Fake Service
+![stub](docs/fake-service.png)
 
 ### Documentação de Referência
 Para referência adicional, considere as seguintes seções:

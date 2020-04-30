@@ -5,6 +5,8 @@ import facens.engsoft.escambo.models.InformacoesDeContato;
 import facens.engsoft.escambo.models.Item;
 import facens.engsoft.escambo.models.SolicitacaoDeEscambo;
 import facens.engsoft.escambo.models.Usuario;
+import facens.engsoft.escambo.services.impl.ItemServiceMock;
+import facens.engsoft.escambo.services.impl.SolicitacaoDeEscamboServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,9 +21,9 @@ import static org.mockito.Mockito.when;
 
 public class SolicitacaoDeEscamboServiceTest {
 
-    private static final SolicitacaoDeEscamboService solicitacaoDeEscamboService = new SolicitacaoDeEscamboService();
+    private static final SolicitacaoDeEscamboService solicitacaoDeEscamboService = new SolicitacaoDeEscamboServiceImpl();
 
-    private static final ItemService itemService = mock(ItemService.class);
+    private static final ItemService itemService = mock(ItemServiceMock.class);
 
     @BeforeAll
     public static void setUp() {

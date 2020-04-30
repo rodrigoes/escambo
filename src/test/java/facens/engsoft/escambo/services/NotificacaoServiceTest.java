@@ -2,6 +2,8 @@ package facens.engsoft.escambo.services;
 
 import facens.engsoft.escambo.enums.StatusDaSolicitacao;
 import facens.engsoft.escambo.models.*;
+import facens.engsoft.escambo.services.impl.ItemServiceImpl;
+import facens.engsoft.escambo.services.impl.NotificacaoServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,8 +18,8 @@ import static org.mockito.Mockito.when;
 
 public class NotificacaoServiceTest {
 
-    private static final NotificacaoService notificacaoService = new NotificacaoService();
-    private static final ItemService itemService = mock(ItemService.class);
+    private static final NotificacaoService notificacaoService = new NotificacaoServiceImpl();
+    private static final ItemService itemService = mock(ItemServiceImpl.class);
 
     @BeforeAll
     public static void setUp() {
